@@ -217,7 +217,7 @@ set listchars=tab:>\ ,trail:·
 
 " Highlight tail extra space
 highlight ExtraWhitespace ctermbg=red guibg=red
-autocmd BufWinEnter,BufRead,BufNewFile * match ExtraWhitespace /\s\+$\|^\n\{1,}$/
+autocmd BufWinEnter,BufRead,BufNewFile * match ExtraWhitespace /\s\+$\|\n\+\%$/
 
 """"""""""""""""""""""""""""""
 " => Visual mode related
