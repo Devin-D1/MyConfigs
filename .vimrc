@@ -179,7 +179,6 @@ set encoding=utf8
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -214,11 +213,11 @@ set wrap "Wrap lines
 
 " Display tab and space
 set list
-set listchars=tab:>·,trail:·
+set listchars=tab:>\ ,trail:·
 
 " Highlight tail extra space
 highlight ExtraWhitespace ctermbg=red guibg=red
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$\| \+\ze\t\+\|\t\+\zs \+/
+autocmd BufWinEnter,BufRead,BufNewFile * match ExtraWhitespace /\s\+$\|^\n\{1,}$/
 
 """"""""""""""""""""""""""""""
 " => Visual mode related
@@ -227,7 +226,6 @@ autocmd BufWinEnter * match ExtraWhitespace /\s\+$\| \+\ze\t\+\|\t\+\zs \+/
 " Super useful! From an idea by Michael Naumann
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs, windows and buffers
