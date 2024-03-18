@@ -66,6 +66,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'NLKNguyen/papercolor-theme'
+Plugin 'vim-scripts/AutoComplPop'
 
 call vundle#end()
 filetype plugin indent on
@@ -154,7 +155,6 @@ endif
 
 " Add a bit extra margin to the left
 set foldcolumn=1
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
