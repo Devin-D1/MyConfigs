@@ -43,10 +43,8 @@ au FocusGained,BufEnter * silent! checktime
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
-let mapleader = ","
-
-" Fast saving
-nmap <leader>w :w!<cr>
+" Keep leader as '\'
+"let mapleader = ","
 
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
@@ -67,6 +65,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'vim-scripts/AutoComplPop'
+Plugin 'junegunn/fzf'
 
 call vundle#end()
 filetype plugin indent on
