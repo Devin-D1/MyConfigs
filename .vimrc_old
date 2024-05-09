@@ -43,8 +43,10 @@ au FocusGained,BufEnter * silent! checktime
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
-" Keep leader as '\'
-"let mapleader = ","
+let mapleader = ","
+
+" Fast saving
+nmap <leader>w :w!<cr>
 
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
@@ -63,13 +65,16 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
+Plugin 'git://git.wincent.com/command-t.git'
+Plugin 'file:///home/gmarik/path/to/plugin'
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'NLKNguyen/papercolor-theme'
-Plugin 'vim-scripts/AutoComplPop'
-Plugin 'junegunn/fzf'
 
 call vundle#end()
 filetype plugin indent on
 
+"set noendofline
+"set nofixendofline
 set t_Co=256
 set background=dark
 colorscheme PaperColor
@@ -155,6 +160,7 @@ endif
 " Add a bit extra margin to the left
 set foldcolumn=1
 
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -177,6 +183,7 @@ set encoding=utf8
 
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
@@ -212,11 +219,11 @@ set wrap "Wrap lines
 
 " Display tab and space
 set list
-set listchars=tab:>\ ,trail:·
+set listchars=tab:>·,trail:·
 
 " Highlight tail extra space
 highlight ExtraWhitespace ctermbg=red guibg=red
-autocmd BufWinEnter,BufRead,BufNewFile * match ExtraWhitespace /\s\+$\|\n\+\%$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$\| \+\ze\t\+\|\t\+\zs \+/
 
 """"""""""""""""""""""""""""""
 " => Visual mode related
@@ -225,6 +232,7 @@ autocmd BufWinEnter,BufRead,BufNewFile * match ExtraWhitespace /\s\+$\|\n\+\%$/
 " Super useful! From an idea by Michael Naumann
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs, windows and buffers
@@ -405,59 +413,3 @@ function! VisualSelection(direction, extra_filter) range
     let @/ = l:pattern
     let @" = l:saved_reg
 endfunction
-
-if has("cscope")
-    set csprg=/usr/bin/cscope
-    " change this to 1 to search ctags DBs first
-    set csto=0
-    set cst
-    set nocsverb
-    " add any database in current directory
-    function! LoadCscope()
-        let db = findfile("cscope.out", ".;")
-        if (!empty(db))
-        let path = strpart(db, 0, match(db, "/cscope.out$"))
-        set nocscopeverbose " suppress 'duplicate connection' error
-            exe "cs add " . db . " " . path
-            set cscopeverbose
-        endif
-    endfunction
-    au BufEnter /* call LoadCscope()
-    set csverb
-
-    " Using 'CTRL-\' then a search type makes the vim window
-    " "shell-out", with search results displayed on the bottom
-
-    nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-    nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-    nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-
-    " Using 'CTRL-spacebar' then a search type makes the vim window
-    " split horizontally, with search result displayed in
-    " the new window.
-
-    nmap <C-[>s :scs find s <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-[>g :scs find g <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-[>c :scs find c <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-[>t :scs find t <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-[>e :scs find e <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-[>f :scs find f <C-R>=expand("<cfile>")<CR><CR>
-    nmap <C-[>i :scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-    nmap <C-[>d :scs find d <C-R>=expand("<cword>")<CR><CR>
-
-    " Hitting CTRL-space *twice* before the search type does a vertical
-    " split instead of a horizontal one
-
-    nmap <C-[><C-[>s :vert scs find s <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-[><C-[>g :vert scs find g <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-[><C-[>c :vert scs find c <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-[><C-[>t :vert scs find t <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-[><C-[>e :vert scs find e <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-[><C-[>i :vert scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-    nmap <C-[><C-[>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
-endif
