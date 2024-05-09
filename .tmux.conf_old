@@ -1,2 +1,0 @@
-setw -g mode-keys vi
-set-option -g history-limit 65535
