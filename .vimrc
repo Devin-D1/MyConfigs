@@ -66,6 +66,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'vim-scripts/AutoComplPop'
 Plugin 'junegunn/fzf'
+Plugin 'tpope/vim-sleuth'
 
 call vundle#end()
 filetype plugin indent on
@@ -196,7 +197,7 @@ set expandtab
 " Be smart when using tabs ;)
 set smarttab
 
-" 1 tab == 4 spaces
+" 1 tab == 8 spaces
 set shiftwidth=8
 set tabstop=8
 set softtabstop=8
